@@ -19,6 +19,11 @@
                  required></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label floating>Nickname</ion-label>
+      <ion-input type="text" name="name" [(ngModel)]="newCredentials.screenName"
+                 required></ion-input>
+    </ion-item>
+    <ion-item>
       <ion-label floating>E-mail address</ion-label>
       <ion-input type="email" name="email" [(ngModel)]="newCredentials.email"
                  required></ion-input>

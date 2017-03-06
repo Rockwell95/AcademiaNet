@@ -65,6 +65,7 @@ export class SignUpPage {
   private createNewUserEntry(uid: string) {
     this._data.base.ref('users/' + uid).set({
       name: this.newCredentials.name,
+      screenName: this.newCredentials.screenName,
       isGuest: false
     });
   }
