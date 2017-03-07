@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import {NavController, NavParams, ViewController, AlertController} from 'ionic-angular';
+import {Component} from "@angular/core";
+import {NavController, NavParams, ViewController, AlertController} from "ionic-angular";
 import {DataService} from "../../providers/data-service";
 
 /*
-  Generated class for the SignUp page.
+ Generated class for the SignUp page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+ See http://ionicframework.com/docs/v2/components/#navigation for more info on
+ Ionic pages and navigation.
+ */
 @Component({
   selector: 'page-sign-up',
   templateUrl: 'sign-up.html'
@@ -33,20 +33,35 @@ export class SignUpPage {
   }
 
   register() {
-    this._data.auth.createUserWithEmailAndPassword(this.newCredentials.email, this.newCredentials.confirmPassword)
-      .then((info) => {
-        console.log("Registered:", info);
-        this.createNewUserEntry(info.uid);
-        this.dismiss(info.uid);
-        this.showRegisteredMessage();
-        this._data.uid = info.uid;
-      }, (error) => {
-        // Handle Errors here.
-        this.errorMessage = error.message;
-        console.log("ERR:", this.errorMessage);
-        this.registerError = true;
-        // ...
-      });
+    this._data.base.ref('usernames').once('value', snap => {
+      console.log("GOT:", snap.val());
+      if (snap.val()[this.newCredentials.screenName]) {
+        let alert = this.alertCtrl.create({
+          title: "Nickname In Use",
+          message: "This nickname is already in use, please choose another",
+          buttons: ["Okay"]
+        });
+        alert.present();
+      }
+      else {
+        console.log("Proceeding");
+        this._data.auth.createUserWithEmailAndPassword(this.newCredentials.email, this.newCredentials.confirmPassword)
+          .then((info) => {
+            console.log("Registered:", info);
+            this.createNewUserEntry(info.uid);
+            this.dismiss(info.uid);
+            this.showRegisteredMessage();
+            this._data.uid = info.uid;
+            this.addToUnameIdx(this.newCredentials.screenName, this._data.uid);
+          }, (error) => {
+            // Handle Errors here.
+            this.errorMessage = error.message;
+            console.log("ERR:", this.errorMessage);
+            this.registerError = true;
+            // ...
+          });
+      }
+    })
   }
 
   dismiss(data) {
@@ -67,6 +82,21 @@ export class SignUpPage {
       name: this.newCredentials.name,
       screenName: this.newCredentials.screenName,
       isGuest: false
+    });
+  }
+
+  private isValidUsername() {
+
+  }
+
+  private addToUnameIdx(screenName: any, uid: string) {
+    let newUname = {};
+    newUname['/usernames/' + screenName] = uid;
+    // Saves places of interest to Database
+    this._data.base.ref().update(newUname).then(() => {
+      console.log("Successfully updated!")
+    }).catch((error) => {
+      console.warn("Cannot update:", error);
     });
   }
 }
