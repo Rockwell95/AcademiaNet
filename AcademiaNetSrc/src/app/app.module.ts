@@ -12,6 +12,7 @@ import {SearchResultsPage} from "../pages/search-results/search-results";
 import {ConferenceInfoPage} from "../pages/conference-info/conference-info";
 import {Ionic2RatingModule} from "ionic2-rating";
 import {NewReviewPage} from "../pages/new-review/new-review";
+import {NewConferencePage} from "../pages/new-conference/new-conference";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {NewReviewPage} from "../pages/new-review/new-review";
     SignUpPage,
     SearchResultsPage,
     ConferenceInfoPage,
-    NewReviewPage
+    NewReviewPage,
+    NewConferencePage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -41,7 +43,8 @@ import {NewReviewPage} from "../pages/new-review/new-review";
     SignUpPage,
     SearchResultsPage,
     ConferenceInfoPage,
-    NewReviewPage
+    NewReviewPage,
+    NewConferencePage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, DataService]
 })

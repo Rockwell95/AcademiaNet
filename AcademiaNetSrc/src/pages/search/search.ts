@@ -1,8 +1,9 @@
 import {Component, DoCheck} from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import {NavController, NavParams, ModalController} from 'ionic-angular';
 import {DataService} from "../../providers/data-service";
 import * as $ from 'jquery';
 import {ConferenceInfoPage} from "../conference-info/conference-info";
+import {NewConferencePage} from "../new-conference/new-conference";
 
 /*
   Generated class for the Search page.
@@ -26,7 +27,7 @@ export class SearchPage{
 
   conferences: Array<any> = [];
 
-  constructor(private navCtrl: NavController, public navParams: NavParams, private _data: DataService) {}
+  constructor(private navCtrl: NavController, public navParams: NavParams, private _data: DataService, private modalCtrl: ModalController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');
@@ -79,6 +80,14 @@ export class SearchPage{
   }
 
   private addConference(){
-    console.log("STUB: Opening new conference page");
+    let newConModal = this.modalCtrl.create(NewConferencePage, {});
+
+    newConModal.onDidDismiss(data => {
+      // console.log(data);
+      if (data) {
+        this._data.base.ref('/conferences').push(data);
+      }
+    });
+    newConModal.present();
   }
 }
