@@ -32,7 +32,9 @@ export class NewConferencePage {
   }
 
   dismiss(conInfo){
-    conInfo.dateAdded = (new Date(Date.now())).toISOString();
+    if (conInfo !== null) {
+      conInfo.dateAdded = (new Date(Date.now())).toISOString();
+    }
 
     this.viewCtrl.dismiss(conInfo);
   }
