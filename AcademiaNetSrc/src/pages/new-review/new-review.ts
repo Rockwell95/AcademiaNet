@@ -34,9 +34,10 @@ export class NewReviewPage {
   }
 
   dismiss(reviewInfo){
-    reviewInfo.userName = this.userName;
-    reviewInfo.dateTime = Date.now();
-
+    if (reviewInfo !== null) {
+      reviewInfo.userName = this.userName;
+      reviewInfo.dateTime = Date.now();
+    }
     this.viewCtrl.dismiss(reviewInfo);
   }
 }
