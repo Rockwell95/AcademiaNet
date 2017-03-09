@@ -18,10 +18,13 @@
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let con of conferences" menuClose (click)="openConferenceInfo(con)">
-      <i><span style="font-style: italic; font-weight: bold">{{con.name}}</span>
+      <i><span style="font-style: normal" [hidden]="con.type !== 'j'">[Journal]</span><span style="font-style: normal" [hidden]="con.type !== 'c'">[Conference]</span><span
+        style="font-style: italic; font-weight: bold">&nbsp;{{con.name}}</span>
         &nbsp;<span>({{con.acronym}})</span></i>
       <i [hidden]="con.aggregate" item-right>No Reviews Yet</i>
-      <i [hidden]="!con.aggregate" item-right><rating [(ngModel)]="con.aggregate" readOnly="true"></rating></i>
+      <i [hidden]="!con.aggregate" item-right>
+        <rating [(ngModel)]="con.aggregate" readOnly="true"></rating>
+      </i>
     </ion-item>
   </ion-list>
   <p style="text-align: center" [hidden]="conferences.length !== 0">No Results found for "{{query.string}}", would you

@@ -22,6 +22,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private _data: DataService, private viewCtrl: ViewController, private modalCtrl: ModalController) {
     this.registerCredentials = {};
     this.loginError = false;
+    // LoginPage.facebookButton(document, 'script', 'facebook-jssdk')
   }
 
   createAccount(){
@@ -66,6 +67,15 @@ export class LoginPage {
       this.loginError = true;
     })
 
+  }
+
+  static facebookButton(d, s, id) {
+    let js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
   }
 
 }

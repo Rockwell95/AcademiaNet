@@ -29,8 +29,9 @@
     <ion-list-header>REVIEWS...</ion-list-header>
     <ion-item *ngFor="let review of conInfo.reviews">
       <rating [(ngModel)]="review.rating" readOnly="true"></rating>
-      <ion-title>{{review.title}}</ion-title>
+      <ion-title>"{{review.title}}"</ion-title>
       <p style="font-style: italic">By {{review.userName}} on {{handleDateTime(review.dateTime)}}</p>
+      <p [hidden]="!review.year" style="font-weight: bold">For the year {{review.year ? review.year.substr(0,4) : "1900"}}</p>
       <br>
       <p>{{review.body}}</p>
     </ion-item>

@@ -20,8 +20,16 @@
 <ion-content padding>
   <form (ngSubmit)="dismiss(review)">
     <ion-item>
+      <ion-label>Review Anonymously</ion-label>
+      <ion-checkbox name="anon" [(ngModel)]="isAnon" [disabled]="uid === GUEST_UID"></ion-checkbox>
+    </ion-item>
+    <ion-item>
       <ion-label floating color="primary">Reviewing as:</ion-label>
       <ion-input name="name" readonly [(ngModel)]="userName"></ion-input>
+    </ion-item>
+    <ion-item [hidden]="type !== 'c'">
+      <ion-label color="primary" fixed>Year:</ion-label>
+      <ion-datetime name="year" displayFormat="YYYY" [(ngModel)]="review.year"></ion-datetime>
     </ion-item>
     <ion-item>
       <rating name="stars" [(ngModel)]="review.rating"></rating>

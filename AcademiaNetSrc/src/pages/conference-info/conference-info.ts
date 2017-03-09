@@ -23,7 +23,7 @@ export class ConferenceInfoPage {
   }
 
   private addReview(){
-    let reviewModal = this.modalCtrl.create(NewReviewPage, {});
+    let reviewModal = this.modalCtrl.create(NewReviewPage, {conType: this.conInfo.type});
 
     reviewModal.onDidDismiss(data => {
       // console.log(data);
@@ -49,7 +49,11 @@ export class ConferenceInfoPage {
       totalStars += review.rating;
     }
 
-    this.conInfo.aggregate = Math.floor(totalStars/totalReviews);
+    this.conInfo.aggregate = ConferenceInfoPage.roundHalf(totalStars/totalReviews);
+  }
+
+  private static roundHalf(number: number) {
+    return Math.round(number * 2) / 2;
   }
 
   handleDateTime(dateString){

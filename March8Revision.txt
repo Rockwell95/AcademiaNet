@@ -1,4 +1,5 @@
-- Social Media Login
-- Anonymous Posting
-- Dropdown for Year
-- Conference or Journal?
+[ ] Social Media Login
+[X] Anonymous Posting
+[X] Dropdown for Year (Remove years from titles)
+[X] Conference or Journal?
+[ ] Individual Rankings (Need more from Q)

@@ -24,6 +24,7 @@ export class NewConferencePage {
     this._data.base.ref('users').orderByKey().equalTo(this._data.uid).on('child_added', snap => {
       console.log(snap.val());
       this.newCon.addedBy = snap.val().screenName;
+      this.newCon.type = 'c';
     })
   }
 
@@ -34,6 +35,9 @@ export class NewConferencePage {
   dismiss(conInfo){
     if (conInfo !== null) {
       conInfo.dateAdded = (new Date(Date.now())).toISOString();
+      if(conInfo.acronym === ""){
+        conInfo.acronym = "N/A"
+      }
     }
 
     this.viewCtrl.dismiss(conInfo);

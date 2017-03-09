@@ -16,6 +16,8 @@ export class DataService {
   public users: any;
   public uid: string;
 
+  public static GUEST_UID: string = "giVbg3j4tpbeG9Us1W9k8iQhKiR2";
+
   constructor() {}
 
   init(){
