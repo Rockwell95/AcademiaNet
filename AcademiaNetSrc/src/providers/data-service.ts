@@ -16,6 +16,10 @@ export class DataService {
   public users: any;
   public uid: string;
 
+  public gProvider: any;
+  public tProvider: any;
+  public fProvider: any;
+
   public static GUEST_UID: string = "giVbg3j4tpbeG9Us1W9k8iQhKiR2";
 
   constructor() {}
@@ -34,6 +38,11 @@ export class DataService {
     this.base = firebase.database();
     this.auth = firebase.auth();
     this.users = this.base.ref('users');
+
+    this.gProvider = new firebase.auth.GoogleAuthProvider();
+    this.tProvider = new firebase.auth.TwitterAuthProvider();
+    this.fProvider = new firebase.auth.FacebookAuthProvider();
+
   }
 
 }
