@@ -47,6 +47,9 @@ export class NewReviewPage implements DoCheck{
       this.GUEST_UID = DataService.GUEST_UID;
 
       this.type = this.navParams.get('conType');
+
+      console.log(this.uid);
+      console.log(this.GUEST_UID);
     })
   }
 

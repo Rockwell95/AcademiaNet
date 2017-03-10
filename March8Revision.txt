@@ -1,4 +1,4 @@
-[ ] Social Media Login
+[~] Social Media Login
 [X] Anonymous Posting
 [X] Dropdown for Year (Remove years from titles)
 [X] Conference or Journal?

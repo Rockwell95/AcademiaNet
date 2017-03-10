@@ -20,7 +20,7 @@ export class DataService {
   public tProvider: any;
   public fProvider: any;
 
-  public static GUEST_UID: string = "giVbg3j4tpbeG9Us1W9k8iQhKiR2";
+  public static GUEST_UID: string = "o0UxaIlJqWSYnXtibzG7x6nbOBr2";
 
   constructor() {}
 

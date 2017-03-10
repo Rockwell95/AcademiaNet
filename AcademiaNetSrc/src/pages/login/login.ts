@@ -15,7 +15,7 @@ export class LoginPage {
   loginError: boolean;
   errorMessage: string;
 
-  readonly GUEST_EMAIL = 'dominick.james7@gmail.com';
+  readonly GUEST_EMAIL = 'notreal@email.com';
   readonly GUEST_PASSWORD = 'guestpass';
 
 
