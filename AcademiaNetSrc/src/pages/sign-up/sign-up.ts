@@ -85,10 +85,6 @@ export class SignUpPage {
     });
   }
 
-  private isValidUsername() {
-
-  }
-
   private addToUnameIdx(screenName: any, uid: string) {
     let newUname = {};
     newUname['/usernames/' + screenName] = uid;

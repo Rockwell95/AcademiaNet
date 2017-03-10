@@ -69,29 +69,12 @@ export class LoginPage {
 
   }
 
+  // ------ SOCIAL MEDIA SIGN IN METHODS -----\
   signInWithGoogle() {
     this._data.auth.signInWithPopup(this._data.gProvider).then((res) => {
-      let tmpUname = res.user.email.substring(0, res.user.email.indexOf("@")).replace(/\./g,'\_');
-      console.log(res);
-
-      this._data.base.ref('usernames').once('value', snap => {
-        console.log("GOT:", snap.val());
-        if (!snap.val()[tmpUname]) {
-          console.log("Proceeding");
-          console.log("Registered:", res);
-          this.createNewUserEntry(res.user.uid, res.user.displayName, tmpUname);
-          this.dismiss(res.user.uid);
-          this._data.uid = res.user.uid;
-          this.showRegisteredMessage();
-          this.addToUnameIdx(tmpUname, this._data.uid);
-        }
-        else{
-          this._data.uid = res.user.uid;
-          this.dismiss(res.user.uid);
-        }
-      });
+      this.handleSignIn(res);
     })
-      .catch(function (error) {
+      .catch(error => {
         // Handle Errors here.
         let errorCode = error.code;
         let errorMessage = error.message;
@@ -104,12 +87,84 @@ export class LoginPage {
   }
 
   signInWithTwitter() {
-
+    this._data.auth.signInWithPopup(this._data.tProvider).then(result =>{
+      this.handleSignIn(result);
+      // ...
+    }).catch(error =>{
+      // Handle Errors here.
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      // The email of the user's account used.
+      let email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      let credential = error.credential;
+      // ...
+      console.warn("ERR", error);
+    });
   }
 
   signInWithFacebook() {
-
+    this._data.auth.signInWithPopup(this._data.fProvider).then(result => {
+      this.handleSignIn(result);
+      // ...
+    })
+      .catch(error => {
+        // Handle Errors here.
+        console.log("ERR:", error);
+        // ...
+      });
   }
+
+  handleSignIn (res: any, inc?: number, originalUname?: string) {
+    let tmpUname;
+    if(res.user.email){
+      tmpUname = res.user.email.substring(0, res.user.email.indexOf("@")).replace(/\./g, '\_')
+    }
+    else{
+      tmpUname = res.user.displayName.split(' ')[0];
+    }
+    console.log(originalUname);
+    if(originalUname){
+      tmpUname = originalUname + "" + inc;
+    }
+    else{
+      originalUname = tmpUname;
+    }
+    // console.log(res);
+    this._data.base.ref('usernames').once('value', snap => {
+      // console.log("GOT:", snap.val());
+      if (!snap.val()[tmpUname]) {
+        console.log("Proceeding");
+        console.log("Registered:", res);
+        this.createNewUserEntry(res.user.uid, res.user.displayName, tmpUname);
+        this.dismiss(res.user.uid);
+        this._data.uid = res.user.uid;
+        this.showRegisteredMessage();
+        this.addToUnameIdx(tmpUname, this._data.uid);
+      }
+      else {
+        // console.log(tmpUname + " already exists");
+        if(snap.val()[tmpUname] !== res.user.uid){
+          let matches = tmpUname.match(/\d+$/);
+          // console.log(matches);
+          if(matches){
+            // recurse through until a valid and unused username is generated.
+            this.handleSignIn(res, parseInt(matches[0]) + 1, originalUname)
+          }
+          else{
+            // begin recursion if username is not found.
+            this.handleSignIn(res, 1, originalUname);
+          }
+        }
+        else{
+          this._data.uid = res.user.uid;
+          this.dismiss(res.user.uid);
+        }
+      }
+    });
+  }
+
+  //----- END SOCIAL MEDIA SIGN IN METHODS -----/
 
   private addToUnameIdx(screenName: any, uid: string) {
     let newUname = {};
