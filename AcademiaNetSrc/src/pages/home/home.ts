@@ -11,6 +11,7 @@ import {DataService} from "../../providers/data-service";
 export class HomePage {
 
   name: string = "";
+  version: string = "0.2";
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, private modalCtrl: ModalController, private _data: DataService, private zone: NgZone) {}
 
