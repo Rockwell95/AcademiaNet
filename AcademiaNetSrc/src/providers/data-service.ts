@@ -20,6 +20,8 @@ export class DataService {
   public tProvider: any;
   public fProvider: any;
 
+  public conferences: any;
+
   public static readonly GUEST_UID: string = "o0UxaIlJqWSYnXtibzG7x6nbOBr2";
 
   constructor() {}

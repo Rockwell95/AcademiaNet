@@ -25,9 +25,14 @@ export class SearchPage{
     string: ""
   };
 
+  limit: number;
+
   conferences: Array<any> = [];
 
-  constructor(private navCtrl: NavController, public navParams: NavParams, private _data: DataService, private modalCtrl: ModalController) {}
+  constructor(private navCtrl: NavController, public navParams: NavParams, private _data: DataService, private modalCtrl: ModalController) {
+    this.limit = 30;
+    this.conferences = _data.conferences;
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');
@@ -38,6 +43,7 @@ export class SearchPage{
   }
 
   getItems(ev: any) {
+    this.limit = 30;
     // Reset items back to all of the items
     this.initializeItems();
 
@@ -89,5 +95,9 @@ export class SearchPage{
       }
     });
     newConModal.present();
+  }
+
+  private loadMoreConferences(){
+    this.limit += 20;
   }
 }

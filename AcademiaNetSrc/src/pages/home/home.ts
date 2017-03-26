@@ -3,6 +3,7 @@ import {Component, NgZone} from '@angular/core';
 import {NavController, AlertController, ModalController} from 'ionic-angular';
 import {LoginPage} from "../login/login";
 import {DataService} from "../../providers/data-service";
+import * as $ from 'jquery';
 
 @Component({
   selector: 'page-home',
@@ -13,7 +14,15 @@ export class HomePage {
   name: string = "";
   version: string = "0.2";
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private modalCtrl: ModalController, private _data: DataService, private zone: NgZone) {}
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private modalCtrl: ModalController, private _data: DataService, private zone: NgZone) {
+    this._data.base.ref('conferences').on('value', (snap) => {
+      console.log(snap.val());
+      let cons = snap.val();
+      _data.conferences = $.map(cons, (value, idx) => {
+        return [value];
+      })
+    })
+  }
 
   ionViewDidLoad(){
     let loginModal = this.modalCtrl.create(LoginPage, {}, {showBackdrop: false, enableBackdropDismiss: false});
