@@ -92,6 +92,7 @@ export class SearchPage{
       // console.log(data);
       if (data) {
         this._data.base.ref('/conferences').push(data);
+        this.navCtrl.push(ConferenceInfoPage, {info: data})
       }
     });
     newConModal.present();
